@@ -1,5 +1,6 @@
 .vs/
 Debug/
+SDL2-devel-2.0.5-VC/
 
 # Compiled Object files
 *.slo
@@ -33,3 +34,6 @@ Debug/
 
 *.VC.db
 *.sln
+*.VC.opendb
+*.filters
+*.vcxproj
