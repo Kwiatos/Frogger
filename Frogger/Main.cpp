@@ -7,11 +7,12 @@ int main(int argc, char* argv[]) {
 	const int SCREEN_WIDTH = 815;
 	const int SCREEN_HEIGHT = 580;
 
-
 	Plansza *plansza = new Plansza(SCREEN_WIDTH, SCREEN_HEIGHT);
+	Board board(SCREEN_WIDTH, SCREEN_HEIGHT, "plansza.bmp");
 
-	SDL_Texture* tex = plansza->loadTexture();
-	plansza->renderTexture(tex, 0, 0);
+	plansza->renderTexture(board, 0, 0);
+
+	//Frogger frogger;
 
 	SDL_Delay(10000);
 	

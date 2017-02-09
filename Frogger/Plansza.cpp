@@ -2,41 +2,50 @@
 
 using namespace std;
 
-void Plansza::renderTexture(SDL_Texture *tex, int x, int y) {
-
-	SDL_Rect texture_rect;
-	texture_rect.x = x;  
-	texture_rect.y = y;
-	texture_rect.w = 815;
-	texture_rect.h = 580; 
-
-	SDL_RenderClear(renderer); 
-
-	SDL_RenderCopy(renderer, tex, NULL, &texture_rect);
-
-	SDL_RenderPresent(renderer); 
-}
-
-SDL_Texture* Plansza::loadTexture() {
-	
-	SDL_Texture *texture = nullptr;
-	
-	SDL_Surface *loadedImage = SDL_LoadBMP("plansza.bmp");
-	
-	if (loadedImage != nullptr) {
-		texture = SDL_CreateTextureFromSurface(this->renderer, loadedImage);
-		SDL_FreeSurface(loadedImage);
-		
-		if (texture == nullptr) {
-			cout << "trealalalall";
-		//	logSDLError(std::cout, "CreateTextureFromSurface");
-		}
+SDL_Window* Plansza::getWindow() 
+{
+	if (this->window != NULL) {
+		return this->window;
 	}
 	else {
-		cout << "trealalalall";
-		//logSDLError(std::cout, "LoadBMP");
+		return NULL;
 	}
-	return texture;
+}
+
+SDL_Renderer* Plansza::getRenderer()
+{
+	if (this->renderer != NULL) {
+		return this->renderer;
+	}
+	else {
+		return NULL;
+	}
+}
+
+void Plansza::renderTexture(Texture & texture, int x, int y) {
+
+	SDL_Texture *textureSDL = nullptr;
+	SDL_Surface* loadedImage = texture.prepareToTexture(texture.getFilePath());
+	if (loadedImage != nullptr) {
+		textureSDL = SDL_CreateTextureFromSurface(this->renderer, loadedImage);
+		SDL_FreeSurface(loadedImage);
+	}
+		if (textureSDL == nullptr) {
+			cout << "trealalalall";
+			//	logSDLError(std::cout, "CreateTextureFromSurface");
+		}
+		
+		SDL_Rect texture_rect;
+		texture_rect.x = x;
+		texture_rect.y = y;
+		texture_rect.w = 815;
+		texture_rect.h = 580;
+
+		SDL_RenderClear(renderer);
+
+		SDL_RenderCopy(renderer, textureSDL, NULL, &texture_rect);
+
+		SDL_RenderPresent(renderer);
 }
 
 Plansza::Plansza(const int screenWidth, const int screenHeight)
@@ -58,7 +67,6 @@ Plansza::Plansza(const int screenWidth, const int screenHeight)
 			//logSDLError(std::cout, "CreateRenderer");
 			SDL_Quit();
 		}
-
 	}
 }
 
@@ -67,7 +75,6 @@ Plansza::Plansza()
 	this->window = NULL;
 	this->renderer = NULL;
 }
-
 
 Plansza::~Plansza()
 {
