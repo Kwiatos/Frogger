@@ -5,3 +5,4 @@
 #include "Frogger.h"
 #include "Board.h"
 #include "Texture.h"
+#include "Samochod.h"

@@ -2,6 +2,10 @@
 
 using namespace std;
 
+int** Plansza::getTablica() {
+	return this->tablica;
+}
+
 SDL_Window* Plansza::getWindow() 
 {
 	if (this->window != NULL) {
@@ -22,7 +26,7 @@ SDL_Renderer* Plansza::getRenderer()
 	}
 }
 
-void Plansza::renderTexture(Texture & texture, int x, int y) {
+SDL_Rect Plansza::renderTexture(Texture & texture, int x, int y) {
 
 	SDL_Texture *textureSDL = nullptr;
 	SDL_Surface* loadedImage = texture.prepareToTexture(texture.getFilePath());
@@ -38,14 +42,22 @@ void Plansza::renderTexture(Texture & texture, int x, int y) {
 		SDL_Rect texture_rect;
 		texture_rect.x = x;
 		texture_rect.y = y;
-		texture_rect.w = 815;
-		texture_rect.h = 580;
+		texture_rect.w = loadedImage->w;
+		texture_rect.h = loadedImage->h;
 
-		SDL_RenderClear(renderer);
 
-		SDL_RenderCopy(renderer, textureSDL, NULL, &texture_rect);
+		texture.image.x = x;
+		texture.image.y = y;
+		texture.image.w = loadedImage->w;
+		texture.image.h = loadedImage->h;
+//		SDL_RenderClear(renderer);
+
+		SDL_RenderCopy(renderer, textureSDL, NULL, &texture.image);
 
 		SDL_RenderPresent(renderer);
+
+
+		return texture_rect;
 }
 
 Plansza::Plansza(const int screenWidth, const int screenHeight)
@@ -67,6 +79,12 @@ Plansza::Plansza(const int screenWidth, const int screenHeight)
 			//logSDLError(std::cout, "CreateRenderer");
 			SDL_Quit();
 		}
+	}
+
+	this->tablica = new int*[11];
+
+	for (int i = 0; i < 13; i++) {
+		this->tablica[i] = new int[13];
 	}
 }
 

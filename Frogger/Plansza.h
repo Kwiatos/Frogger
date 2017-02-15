@@ -12,10 +12,15 @@ private:
 	SDL_Renderer* renderer;
 	Frogger frogger;
 	Board board;
+	int** tablica;
+	typedef struct pointOfBoard {
+		int x, y;
+	} point;
 public:
+	int** getTablica();
 	SDL_Window* getWindow();
 	SDL_Renderer* getRenderer();
-	void renderTexture(Texture & texture, int x, int y);
+	SDL_Rect renderTexture(Texture & texture, int x, int y);
 	Plansza(const int screenWidth, const int screenHeight);
 	Plansza();
 	~Plansza();

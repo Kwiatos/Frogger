@@ -4,6 +4,12 @@
 
 using namespace std;
 
+SDL_Rect Texture::getImage()
+{
+	return this->image;
+}
+
+
 std::string Texture::getFilePath() {
 	return this->filePath;
 }
